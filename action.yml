@@ -1,0 +1,44 @@
+# action.yml
+name: 'Slack Notifier'
+description: 'Publish a github action build status on Slack'
+inputs:
+  BOT_TOKEN:
+    description: 'Slack bot token'
+    required: true
+
+  CHANNEL_NAME:
+    description: 'The channel where to announce'
+    required: true
+    default: 'gs-georchstra'
+
+  FAILURE:
+    description: 'boolean flag indicating if this is a failure (red) or not (green)'
+    required: true
+    default: 'false'
+
+  MESSAGE:
+    description: 'The message for the announce'
+    required: true
+    default: 'default notification message'
+
+  RAW_DESC:
+    description: 'The raw description in the announce message'
+    required: true
+    default: 'default notification message'
+
+  URL:
+    description: 'the URL to the build'
+    required: true
+    default: 'https://github.com/'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.BOT_TOKEN }}
+    - ${{ inputs.CHANNEL_NAME }}
+    - ${{ inputs.FAILURE }}
+    - ${{ inputs.MESSAGE }}
+    - ${{ inputs.RAW_DESC }}
+    - ${{ inputs.URL }}
+
